@@ -1,12 +1,22 @@
 import { View, Image, StyleSheet, TextInput } from "react-native";
+import { useContext } from "react";
+import DataContext from "../Context/DataContext";
 
 const magnifyingIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/magnifying-glass.png");
 
 const SearchSection = () => {
+  const { setSearchKeyword } = useContext(DataContext);
+  searchStocks = (searchtext) => {
+    const lowerCaseKeyword = searchtext.toLowerCase();
+    setSearchKeyword(lowerCaseKeyword);
+  };
   return (
     <View style={styles.searchSection}>
       <View style={styles.searchPallet}>
-        <TextInput style={styles.searchInut} />
+        <TextInput
+          style={styles.searchInut}
+          onChangeText={(keyWord) => searchStocks(keyWord)}
+        />
         <View style={styles.searchIconarea}>
           <Image
             source={magnifyingIcon}
