@@ -55,8 +55,11 @@ const CardsSection = () => {
       <ScrollView style={styles.cardPallete}>
         {loader ? (
           <View style={styles.loader}>
-            <ActivityIndicator size={50} color="blue" animating={loader} />
-            <Text>Loading, Please Wait !</Text>
+            <ActivityIndicator size={50} color="green" animating={loader} />
+            <Text style={styles.loaderText}>Hold On!</Text>
+            <Text style={styles.loaderText}>
+              We are loading your Stock details...
+            </Text>
           </View>
         ) : (
           <Stockcard stockList={filteredStocks} />
@@ -88,5 +91,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 450,
+  },
+  loaderText: {
+    fontWeight: "600",
+    color: "gray",
   },
 });
