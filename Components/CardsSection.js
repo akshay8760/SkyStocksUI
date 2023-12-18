@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  ToastAndroid,
 } from "react-native";
 import Stockcard from "./StockCard";
 import base64 from "react-native-base64";
@@ -18,6 +19,7 @@ const CardsSection = () => {
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [loader, setLoader] = useState(true);
+  const [stockLength, setStockLength] = useState();
 
   const fetchData = async () => {
     try {
@@ -30,7 +32,9 @@ const CardsSection = () => {
       const data = await response.json();
       setAllStocks(data);
       setFilteredStocks(data);
+      setStockLength(data.length);
       setLoader(false);
+      ToastAndroid.show(data.length + " stocks", ToastAndroid.SHORT);
     } catch (error) {
       setLoader(true);
     }
@@ -47,6 +51,7 @@ const CardsSection = () => {
     });
 
     setFilteredStocks(results);
+    setStockLength(results.length);
   }, [searchKeyword]);
 
   return (
@@ -62,7 +67,7 @@ const CardsSection = () => {
             </Text>
           </View>
         ) : (
-          <Stockcard stockList={filteredStocks} />
+          <Stockcard stockList={filteredStocks} stockLength={stockLength} />
         )}
       </ScrollView>
     </View>

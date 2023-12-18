@@ -18,9 +18,13 @@ const styles = StyleSheet.create({
   },
   typetextActive: {
     fontSize: 15,
-    marginRight: 25,
+    marginRight: 10,
     fontWeight: "bold",
-    color: "black",
+    color: "white",
+    backgroundColor: "black",
+    paddingHorizontal: 10,
+    paddingVertical: 1,
+    borderRadius: 12,
   },
   typetext: {
     fontSize: 15,

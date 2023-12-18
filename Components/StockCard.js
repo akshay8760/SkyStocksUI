@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const Stockcard = ({ stockList }) => {
-  return (
+const Stockcard = ({ stockList, stockLength }) => {
+  return stockLength ? (
     <View>
       {stockList.map((item) => {
         return (
@@ -11,7 +11,6 @@ const Stockcard = ({ stockList }) => {
               <Text style={styles.infoTitle}>{item.name}</Text>
               <Text style={styles.infoSub}>{item.dateTime}</Text>
               <View style={styles.infoPrice}>
-                {/* <Text style={styles.infoAmount}>Rs. 230</Text> */}
                 <View style={styles.infoPriceSection}>
                   <Text style={styles.stopLossText}>🔴 StopLoss</Text>
                   <Text style={styles.priceAmount}>₹ {item.stopLoss}</Text>
@@ -29,6 +28,11 @@ const Stockcard = ({ stockList }) => {
           </View>
         );
       })}
+    </View>
+  ) : (
+    <View style={styles.nothingFound}>
+      <Text style={styles.nothingFoundText}>Oops...</Text>
+      <Text style={styles.nothingFoundText}>Nothing found here !</Text>
     </View>
   );
 };
@@ -96,5 +100,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "600",
     color: "#696969",
+  },
+  nothingFound: {
+    alignItems: "center",
+  },
+  nothingFoundText: {
+    fontWeight: "600",
+    color: "gray",
   },
 });
