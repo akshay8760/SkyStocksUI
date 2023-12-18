@@ -1,31 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import Stockcard from "./StockCard";
 import base64 from "react-native-base64";
 import { useContext } from "react";
 import DataContext from "../Context/DataContext";
+import { useIsFocused } from "@react-navigation/native";
 
 const CardsSection = () => {
+  const isFocused = useIsFocused();
   const { searchKeyword } = useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const fetchData = async () => {
-    const response = await fetch("http://192.168.1.58:3000/stocks", {
-      headers: {
-        Authorization:
-          "Basic " + base64.encode("Sky_Stock" + ":" + "skystock9876"),
-      },
-    });
-    const data = await response.json();
-    setAllStocks(data);
-    setFilteredStocks(data);
+    try {
+      const response = await fetch("http://192.168.1.58:3000/stocks", {
+        headers: {
+          Authorization:
+            "Basic " + base64.encode("Sky_Stock" + ":" + "skystock9876"),
+        },
+      });
+      const data = await response.json();
+      setAllStocks(data);
+      setFilteredStocks(data);
+      setLoader(false);
+    } catch (error) {
+      setLoader(true);
+    }
   };
 
   useEffect(() => {
     // Update the document title using the browser API
     fetchData();
-  }, []);
+  }, [isFocused]);
 
   useEffect(() => {
     const results = allStocks.filter((stocks) => {
@@ -39,7 +53,14 @@ const CardsSection = () => {
     <View style={styles.listSection}>
       <Text style={styles.headText}>Recommendations</Text>
       <ScrollView style={styles.cardPallete}>
-        <Stockcard stockList={filteredStocks} />
+        {loader ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size={50} color="blue" animating={loader} />
+            <Text>Loading, Please Wait !</Text>
+          </View>
+        ) : (
+          <Stockcard stockList={filteredStocks} />
+        )}
       </ScrollView>
     </View>
   );
@@ -61,6 +82,11 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 20,
     width: "110%",
+    height: 450,
+  },
+  loader: {
+    justifyContent: "center",
+    alignItems: "center",
     height: 450,
   },
 });

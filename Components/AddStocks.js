@@ -13,8 +13,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderSection from "./HeaderSection";
 import TitleSection from "./TitleSection";
 import base64 from "react-native-base64";
+import { useNavigation } from "@react-navigation/native";
 
 const AddStocks = () => {
+  const navigation = useNavigation();
   const [name, setName] = useState("");
   const [entryPrice, setEntryPrice] = useState("");
   const [target, setTarget] = useState("");
@@ -73,6 +75,7 @@ const AddStocks = () => {
         setDiscription("");
         setErrors({});
         ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
+        navigation.navigate("Home");
       } else {
         ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
       }
