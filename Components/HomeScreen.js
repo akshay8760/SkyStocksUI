@@ -12,7 +12,7 @@ const HomeScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <HeaderSection />
-        <TitleSection />
+        <TitleSection title={"Your Stocks"} />
         <SearchSection />
         <TypesSection />
         <CardsSection />

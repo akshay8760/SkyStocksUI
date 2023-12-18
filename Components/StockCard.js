@@ -9,7 +9,7 @@ const Stockcard = ({ stockList }) => {
           <View style={styles.card} key={item._id}>
             <View style={styles.infoArea}>
               <Text style={styles.infoTitle}>{item.name}</Text>
-              <Text style={styles.infoSub}>0{item.dateTime}</Text>
+              <Text style={styles.infoSub}>{item.dateTime}</Text>
               <View style={styles.infoPrice}>
                 {/* <Text style={styles.infoAmount}>Rs. 230</Text> */}
                 <View style={styles.infoPriceSection}>
