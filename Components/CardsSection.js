@@ -3,21 +3,6 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Stockcard from "./StockCard";
 import base64 from "react-native-base64";
 
-// const getStocksFromApiAsync = async () => {
-//   try {
-//     const response = await fetch("http://localhost:3000/stocks", {
-//       headers: {
-//         Authorization:
-//           "Basic " + base64.encode("Sky_Stock" + ":" + "skystock9876"),
-//       },
-//     });
-//     const json = await response.json();
-//     return json.movies;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
 const CardsSection = () => {
   const [allStocks, setAllStocks] = useState([]);
 
