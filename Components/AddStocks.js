@@ -14,6 +14,8 @@ import HeaderSection from "./HeaderSection";
 import TitleSection from "./TitleSection";
 import base64 from "react-native-base64";
 import { useNavigation } from "@react-navigation/native";
+import { PORT, API_USER, API_PASS } from "@env";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 const AddStocks = () => {
   const navigation = useNavigation();
@@ -23,17 +25,18 @@ const AddStocks = () => {
   const [stopLoss, setStopLoss] = useState("");
   const [description, setDiscription] = useState("");
   const [errors, setErrors] = useState({});
+  const [showAlert, setShowAlert] = useState(false);
 
   const saveStocksDetails = async () => {
     const date = new Date();
     try {
-      const response = await fetch("http://192.168.1.58:3000/stocks", {
+      const url = "http://" + PORT + "/stocks";
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization:
-            "Basic " + base64.encode("Sky_Stock" + ":" + "skystock9876"),
+          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
         },
         body: JSON.stringify({
           name: name,
@@ -41,7 +44,7 @@ const AddStocks = () => {
           stopLoss: stopLoss,
           target: target,
           strategy: description,
-          dateTime: date.toLocaleDateString(),
+          dateTime: date.toLocaleString(),
         }),
       });
 
@@ -75,11 +78,20 @@ const AddStocks = () => {
         setDiscription("");
         setErrors({});
         ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
+        setShowAlert(false);
         navigation.navigate("Home");
       } else {
         ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
       }
     }
+  };
+
+  const alertHide = () => {
+    setShowAlert(false);
+  };
+
+  const alertShow = () => {
+    setShowAlert(true);
   };
 
   return (
@@ -156,12 +168,31 @@ const AddStocks = () => {
             </View>
             <TouchableOpacity
               style={styles.addDetailsButton}
-              onPress={handleSubmit}
+              onPress={() => alertShow()}
             >
               <Text style={styles.submitDetailstext}>Submit Detials</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
+        <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Warning!"
+          message="Are you sure you want to add this item?"
+          closeOnTouchOutside={false}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="No, cancel"
+          confirmText="Yes, add it"
+          confirmButtonColor="#4caf50"
+          onCancelPressed={() => {
+            alertHide();
+          }}
+          onConfirmPressed={() => {
+            handleSubmit();
+          }}
+        />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

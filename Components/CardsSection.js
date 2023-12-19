@@ -12,8 +12,9 @@ import base64 from "react-native-base64";
 import { useContext } from "react";
 import DataContext from "../Context/DataContext";
 import { useIsFocused } from "@react-navigation/native";
+import { PORT, API_USER, API_PASS } from "@env";
 
-const CardsSection = () => {
+const CardsSection = ({ navigation }) => {
   const isFocused = useIsFocused();
   const { searchKeyword } = useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
@@ -23,10 +24,10 @@ const CardsSection = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://192.168.1.58:3000/stocks", {
+      const url = "http://" + PORT + "/stocks";
+      const response = await fetch(url, {
         headers: {
-          Authorization:
-            "Basic " + base64.encode("Sky_Stock" + ":" + "skystock9876"),
+          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
         },
       });
       const data = await response.json();
@@ -34,7 +35,7 @@ const CardsSection = () => {
       setFilteredStocks(data);
       setStockLength(data.length);
       setLoader(false);
-      ToastAndroid.show(data.length + " stocks", ToastAndroid.SHORT);
+      // ToastAndroid.show(data.length + " stocks", ToastAndroid.SHORT);
     } catch (error) {
       setLoader(true);
     }
@@ -43,7 +44,7 @@ const CardsSection = () => {
   useEffect(() => {
     // Update the document title using the browser API
     fetchData();
-  }, [isFocused]);
+  }, [isFocused]); // [isFocused]
 
   useEffect(() => {
     const results = allStocks.filter((stocks) => {
@@ -67,7 +68,11 @@ const CardsSection = () => {
             </Text>
           </View>
         ) : (
-          <Stockcard stockList={filteredStocks} stockLength={stockLength} />
+          <Stockcard
+            stockList={filteredStocks}
+            stockLength={stockLength}
+            navigation={navigation}
+          />
         )}
       </ScrollView>
     </View>

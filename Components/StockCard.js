@@ -1,14 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Stockcard = ({ stockList, stockLength }) => {
+const Stockcard = ({ stockList, stockLength, navigation }) => {
   return stockLength ? (
     <View>
       {stockList.map((item) => {
         return (
-          <View style={styles.card} key={item._id}>
+          <TouchableOpacity
+            style={styles.card}
+            key={item._id}
+            activeOpacity={0.5}
+            onPress={() =>
+              navigation.navigate("Info", { stockDetails: { item } })
+            }
+          >
             <View style={styles.infoArea}>
-              <Text style={styles.infoTitle}>{item.name}</Text>
+              <Text style={styles.infoTitle}>{item.name.toUpperCase()}</Text>
               <Text style={styles.infoSub}>{item.dateTime}</Text>
               <View style={styles.infoPrice}>
                 <View style={styles.infoPriceSection}>
@@ -25,7 +32,7 @@ const Stockcard = ({ stockList, stockLength }) => {
                 </View>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         );
       })}
     </View>

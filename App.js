@@ -80,7 +80,7 @@ export default function App() {
             },
           })}
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Home" component={HomeStack} />
           <Tab.Screen name="Add Stocks" component={AddStocks} />
           <Tab.Screen name="Admin" component={Adminpanel} />
           <Tab.Screen name="Settings" component={Settings} />

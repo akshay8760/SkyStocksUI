@@ -7,7 +7,7 @@ import SearchSection from "./SearchSection";
 import TypesSection from "./TypesSection";
 import TitleSection from "./TitleSection";
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -15,7 +15,7 @@ const HomeScreen = () => {
         <TitleSection title={"Your Stocks"} />
         <SearchSection />
         <TypesSection />
-        <CardsSection />
+        <CardsSection navigation={navigation} />
       </View>
     </SafeAreaView>
   );
