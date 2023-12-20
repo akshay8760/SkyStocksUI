@@ -80,7 +80,9 @@ const AddStocks = () => {
       setErrors({});
       ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
       setShowAlert(false);
-      navigation.navigate("Home");
+      setTimeout(() => {
+        navigation.navigate("Home");
+      }, 1000);
     } else {
       setShowAlert(false);
       ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
@@ -94,6 +96,8 @@ const AddStocks = () => {
   const alertShow = () => {
     if (validateForm()) {
       setShowAlert(true);
+    } else {
+      ToastAndroid.show("Please fill all details !", ToastAndroid.SHORT);
     }
   };
 
@@ -117,67 +121,42 @@ const AddStocks = () => {
         <TitleSection title={"Add Stock"} />
         <ScrollView style={styles.scrollMe}>
           <View style={styles.second}>
-            <View style={styles.textAndError}>
-              <TextInput
-                inputMode="text"
-                style={styles.addDetails}
-                placeholder="Name"
-                value={name}
-                onChangeText={(text) => setName(text)}
-              />
-              {errors?.name ? (
-                <Text style={styles.errorText}>{errors.name}</Text>
-              ) : null}
-            </View>
-            <View style={styles.textAndError}>
-              <TextInput
-                style={styles.addDetails}
-                placeholder="Entry Price"
-                value={entryPrice}
-                inputMode="decimal"
-                onChangeText={(text) => setEntryPrice(text)}
-              />
-              {errors?.entryPrice ? (
-                <Text style={styles.errorText}>{errors.entryPrice}</Text>
-              ) : null}
-            </View>
-            <View style={styles.textAndError}>
-              <TextInput
-                style={styles.addDetails}
-                inputMode="decimal"
-                placeholder="Target"
-                value={target}
-                onChangeText={(text) => setTarget(text)}
-              />
-              {errors?.target ? (
-                <Text style={styles.errorText}>{errors.target}</Text>
-              ) : null}
-            </View>
-            <View style={styles.textAndError}>
-              <TextInput
-                inputMode="decimal"
-                style={styles.addDetails}
-                placeholder="Stop Loss"
-                value={stopLoss}
-                onChangeText={(text) => setStopLoss(text)}
-              />
-              {errors?.stopLoss ? (
-                <Text style={styles.errorText}>{errors.stopLoss}</Text>
-              ) : null}
-            </View>
-            <View style={styles.textAndError}>
-              <TextInput
-                inputMode="text"
-                style={styles.addDetails}
-                placeholder="Description (Comments,Startegy,etc.)"
-                value={description}
-                onChangeText={(text) => setDiscription(text)}
-                multiline={true}
-              />
-              {errors?.description ? (
-                <Text style={styles.errorText}>{errors.description}</Text>
-              ) : null}
-            </View>
+            <TextInput
+              inputMode="text"
+              style={styles.addDetails}
+              placeholder="Name"
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <TextInput
+              style={styles.addDetails}
+              placeholder="Entry Price"
+              value={entryPrice}
+              inputMode="decimal"
+              onChangeText={(text) => setEntryPrice(text)}
+            />
+            <TextInput
+              style={styles.addDetails}
+              inputMode="decimal"
+              placeholder="Target"
+              value={target}
+              onChangeText={(text) => setTarget(text)}
+            />
+            <TextInput
+              inputMode="decimal"
+              style={styles.addDetails}
+              placeholder="Stop Loss"
+              value={stopLoss}
+              onChangeText={(text) => setStopLoss(text)}
+            />
+            <TextInput
+              inputMode="text"
+              style={styles.addDetails}
+              placeholder="Description (Comments,Startegy,etc.)"
+              value={description}
+              onChangeText={(text) => setDiscription(text)}
+              multiline={true}
+            />
             <TouchableOpacity
               style={styles.addDetailsButton}
               onPress={() => alertShow()}
@@ -235,6 +214,7 @@ const styles = StyleSheet.create({
     width: "90%",
     fontSize: 14,
     padding: 16,
+    marginBottom: 15,
     marginHorizontal: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -247,21 +227,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 10,
   },
-  errorText: {
-    color: "red",
-    marginHorizontal: 20,
-  },
-  textAndError: {
-    marginBottom: 15,
-  },
   addDetailsButton: {
     padding: 20,
-    backgroundColor: "#1F41BB",
+    backgroundColor: "#4caf50",
     marginVertical: 15,
     marginHorizontal: 60,
     borderRadius: 10,
     elevation: 5,
-    shadowColor: "#1F41BB",
+    shadowColor: "#4caf50",
     shadowOffset: {
       width: 0,
       height: 10,

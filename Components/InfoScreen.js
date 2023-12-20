@@ -290,10 +290,10 @@ const styles = StyleSheet.create({
   editButtonStyle: {
     width: "40%",
     padding: 20,
-    backgroundColor: "#000",
+    backgroundColor: "#abb8c3",
     borderRadius: 10,
     elevation: 5,
-    shadowColor: "#1F41BB",
+    shadowColor: "#abb8c3",
     shadowOffset: {
       width: 0,
       height: 10,
