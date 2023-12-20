@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useIsFocused } from "@react-navigation/native";
 import HeaderSection from "./HeaderSection";
 import TitleSection from "./TitleSection";
 import base64 from "react-native-base64";
@@ -26,6 +27,7 @@ const AddStocks = () => {
   const [description, setDiscription] = useState("");
   const [errors, setErrors] = useState({});
   const [showAlert, setShowAlert] = useState(false);
+  const isFocused = useIsFocused();
 
   const saveStocksDetails = async () => {
     const date = new Date();
@@ -69,20 +71,18 @@ const AddStocks = () => {
 
   const handleSubmit = async () => {
     const date = new Date();
-    if (validateForm()) {
-      if ((await saveStocksDetails()) === 200) {
-        setName("");
-        setEntryPrice("");
-        setTarget("");
-        setStopLoss("");
-        setDiscription("");
-        setErrors({});
-        ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
-        setShowAlert(false);
-        navigation.navigate("Home");
-      } else {
-        ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
-      }
+    if ((await saveStocksDetails()) === 200) {
+      setName("");
+      setEntryPrice("");
+      setTarget("");
+      setStopLoss("");
+      setDiscription("");
+      setErrors({});
+      ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
+      setShowAlert(false);
+      navigation.navigate("Home");
+    } else {
+      ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
     }
   };
 
@@ -91,8 +91,19 @@ const AddStocks = () => {
   };
 
   const alertShow = () => {
-    setShowAlert(true);
+    if (validateForm()) {
+      setShowAlert(true);
+    }
   };
+
+  useEffect(() => {
+    setName("");
+    setEntryPrice("");
+    setTarget("");
+    setStopLoss("");
+    setDiscription("");
+    setErrors({});
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.safeArea}>

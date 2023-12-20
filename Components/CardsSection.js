@@ -5,7 +5,6 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
-  ToastAndroid,
 } from "react-native";
 import Stockcard from "./StockCard";
 import base64 from "react-native-base64";
