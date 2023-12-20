@@ -82,6 +82,7 @@ const AddStocks = () => {
       setShowAlert(false);
       navigation.navigate("Home");
     } else {
+      setShowAlert(false);
       ToastAndroid.show("Please try again !", ToastAndroid.SHORT);
     }
   };

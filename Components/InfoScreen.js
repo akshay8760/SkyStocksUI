@@ -118,7 +118,12 @@ const InfoScreen = ({ route, navigation }) => {
             >
               <Text style={styles.submitDetailstext}>Delete</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.editButtonStyle}>
+            <TouchableOpacity
+              style={styles.editButtonStyle}
+              onPress={() =>
+                navigation.navigate("Edit", { stockDetails: { stockDetails } })
+              }
+            >
               <Text style={styles.submitDetailstext}>Edit</Text>
             </TouchableOpacity>
           </View>

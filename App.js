@@ -7,6 +7,7 @@ import AddStocks from "./Components/AddStocks";
 import Adminpanel from "./Components/AdminPanel";
 import Settings from "./Components/Settings";
 import InfoScreen from "./Components/InfoScreen";
+import EditScreen from "./Components/EditScreen";
 import { DataProvider } from "./Context/DataContext";
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ function HomeStack() {
     >
       <Stack.Screen name="Initial" component={HomeScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
+      <Stack.Screen name="Edit" component={EditScreen} />
     </Stack.Navigator>
   );
 }
