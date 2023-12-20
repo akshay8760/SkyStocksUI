@@ -183,7 +183,7 @@ const EditScreen = ({ route, navigation }) => {
           showCancelButton={true}
           showConfirmButton={true}
           cancelText="No, cancel"
-          confirmText="Yes, add it"
+          confirmText="Yes, edit it"
           confirmButtonColor="#4caf50"
           onCancelPressed={() => {
             alertHide(stockDetails._id);
