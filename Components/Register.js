@@ -155,7 +155,7 @@ export default function Register({ navigation }) {
               />
               <TextInput
                 style={styles.addDetails}
-                placeholder="Password"
+                placeholder="Re-Enter Password"
                 secureTextEntry={true}
                 value={password2}
                 inputMode="text"
@@ -235,10 +235,10 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 25,
     marginHorizontal: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f1f4f6",
     borderRadius: 10,
     elevation: 5,
-    shadowColor: "#fff",
+    shadowColor: "#f1f4f6",
     shadowOffset: {
       width: 0,
       height: 10,
