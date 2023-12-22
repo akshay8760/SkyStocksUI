@@ -15,7 +15,6 @@ import { useNavigation } from "@react-navigation/native";
 import AwesomeAlert from "react-native-awesome-alerts";
 
 const backIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/left-arrow.png");
-const logOutIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/logout.png");
 const faceIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/face.png");
 const emailIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/email.png");
 const phoneIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/phone-call.png");
