@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 13,
     paddingBottom: 10,
     borderRadius: 10,
-    backgroundColor: "#e9ecf2",
+    backgroundColor: "#f6f9fb",
     flexDirection: "row",
     marginBottom: 13,
   },
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     padding: 20,
     backgroundColor: "#ff9800",
-    marginVertical: 35,
+    marginVertical: 30,
     marginHorizontal: 20,
     borderRadius: 10,
     elevation: 5,

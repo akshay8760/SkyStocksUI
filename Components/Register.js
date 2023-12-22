@@ -122,57 +122,61 @@ export default function Register({ navigation }) {
             <Text style={styles.appName}>Sky Stocks</Text>
             <Text style={styles.loginText}>Register Account</Text>
           </View>
-          <View style={styles.loginInput}>
-            <TextInput
-              inputMode="text"
-              style={styles.addDetails}
-              placeholder="Name"
-              value={userName}
-              onChangeText={(text) => setUsername(text)}
-            />
-            <TextInput
-              inputMode="numeric"
-              style={styles.addDetails}
-              placeholder="Phone number"
-              value={phoneNo}
-              onChangeText={(text) => setPhoneNo(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              placeholder="Email Id"
-              value={emailId}
-              inputMode="email"
-              onChangeText={(text) => setEmailId(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password}
-              inputMode="text"
-              onChangeText={(text) => setPassword(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password2}
-              inputMode="text"
-              onChangeText={(text) => setPassword2(text)}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => handleRegister()}
-          >
-            {!spinner && <Text style={styles.submitDetailstext}>Register</Text>}
-            {spinner && <ActivityIndicator size="small" color="white" />}
-          </TouchableOpacity>
-          <View style={styles.noAccount}>
-            <Text style={styles.donttext}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => toSignIn()}>
-              <Text style={styles.signUp}>Sign in</Text>
+          <View style={styles.logincard}>
+            <View style={styles.loginInput}>
+              <TextInput
+                inputMode="text"
+                style={styles.addDetails}
+                placeholder="Name"
+                value={userName}
+                onChangeText={(text) => setUsername(text)}
+              />
+              <TextInput
+                inputMode="numeric"
+                style={styles.addDetails}
+                placeholder="Phone number"
+                value={phoneNo}
+                onChangeText={(text) => setPhoneNo(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                placeholder="Email Id"
+                value={emailId}
+                inputMode="email"
+                onChangeText={(text) => setEmailId(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                placeholder="Password"
+                secureTextEntry={true}
+                value={password}
+                inputMode="text"
+                onChangeText={(text) => setPassword(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                placeholder="Password"
+                secureTextEntry={true}
+                value={password2}
+                inputMode="text"
+                onChangeText={(text) => setPassword2(text)}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => handleRegister()}
+            >
+              {!spinner && (
+                <Text style={styles.submitDetailstext}>Register</Text>
+              )}
+              {spinner && <ActivityIndicator size="small" color="white" />}
             </TouchableOpacity>
+            <View style={styles.noAccount}>
+              <Text style={styles.donttext}>Already have an account?</Text>
+              <TouchableOpacity onPress={() => toSignIn()}>
+                <Text style={styles.signUp}>Sign in</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -216,6 +220,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: "700",
+  },
+  logincard: {
+    backgroundColor: "#d8e0e4",
+    padding: 20,
+    borderRadius: 10,
   },
   loginInput: {
     marginTop: 15,

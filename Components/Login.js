@@ -116,35 +116,37 @@ export default function Login({ navigation }) {
             <Text style={styles.appName}>Sky Stocks</Text>
             <Text style={styles.loginText}>Account Login</Text>
           </View>
-          <View style={styles.loginInput}>
-            <TextInput
-              inputMode="numeric"
-              style={styles.addDetails}
-              placeholder="Phone Number"
-              value={phoneNo}
-              onChangeText={(text) => setPhoneNo(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              placeholder="Password"
-              value={password}
-              secureTextEntry={true}
-              inputMode="text"
-              onChangeText={(text) => setPassword(text)}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={() => handleLogin()}
-          >
-            {!spinner && <Text style={styles.submitDetailstext}>Login</Text>}
-            {spinner && <ActivityIndicator size="small" color="white" />}
-          </TouchableOpacity>
-          <View style={styles.noAccount}>
-            <Text style={styles.donttext}>Don't have an account?</Text>
-            <TouchableOpacity onPress={() => toSignUp()}>
-              <Text style={styles.signUp}>Sign up</Text>
+          <View style={styles.logincard}>
+            <View style={styles.loginInput}>
+              <TextInput
+                inputMode="numeric"
+                style={styles.addDetails}
+                placeholder="Phone Number"
+                value={phoneNo}
+                onChangeText={(text) => setPhoneNo(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                placeholder="Password"
+                value={password}
+                secureTextEntry={true}
+                inputMode="text"
+                onChangeText={(text) => setPassword(text)}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => handleLogin()}
+            >
+              {!spinner && <Text style={styles.submitDetailstext}>Login</Text>}
+              {spinner && <ActivityIndicator size="small" color="white" />}
             </TouchableOpacity>
+            <View style={styles.noAccount}>
+              <Text style={styles.donttext}>Don't have an account?</Text>
+              <TouchableOpacity onPress={() => toSignUp()}>
+                <Text style={styles.signUp}>Sign up</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -193,6 +195,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 16,
     fontWeight: "700",
+  },
+  logincard: {
+    backgroundColor: "#d8e0e4",
+    padding: 20,
+    borderRadius: 10,
   },
   loginInput: {
     marginTop: 15,
