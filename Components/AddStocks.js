@@ -119,50 +119,52 @@ const AddStocks = () => {
       >
         <HeaderSection />
         <ScrollView style={styles.scrollMe}>
-          <TitleSection title={"Add Stock"} />
-          <View style={styles.second}>
-            <TextInput
-              inputMode="text"
-              style={styles.addDetails}
-              placeholder="Name"
-              value={name}
-              onChangeText={(text) => setName(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              placeholder="Entry Price"
-              value={entryPrice}
-              inputMode="decimal"
-              onChangeText={(text) => setEntryPrice(text)}
-            />
-            <TextInput
-              style={styles.addDetails}
-              inputMode="decimal"
-              placeholder="Target"
-              value={target}
-              onChangeText={(text) => setTarget(text)}
-            />
-            <TextInput
-              inputMode="decimal"
-              style={styles.addDetails}
-              placeholder="Stop Loss"
-              value={stopLoss}
-              onChangeText={(text) => setStopLoss(text)}
-            />
-            <TextInput
-              inputMode="text"
-              style={styles.addDetails}
-              placeholder="Description (Comments,Startegy,etc.)"
-              value={description}
-              onChangeText={(text) => setDiscription(text)}
-              multiline={true}
-            />
-            <TouchableOpacity
-              style={styles.addDetailsButton}
-              onPress={() => alertShow()}
-            >
-              <Text style={styles.submitDetailstext}>Submit Detials</Text>
-            </TouchableOpacity>
+          <View style={styles.logincard}>
+            <TitleSection title={"Add Stock"} />
+            <View style={styles.second}>
+              <TextInput
+                inputMode="text"
+                style={styles.addDetails}
+                placeholder="Name"
+                value={name}
+                onChangeText={(text) => setName(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                placeholder="Entry Price"
+                value={entryPrice}
+                inputMode="decimal"
+                onChangeText={(text) => setEntryPrice(text)}
+              />
+              <TextInput
+                style={styles.addDetails}
+                inputMode="decimal"
+                placeholder="Target"
+                value={target}
+                onChangeText={(text) => setTarget(text)}
+              />
+              <TextInput
+                inputMode="decimal"
+                style={styles.addDetails}
+                placeholder="Stop Loss"
+                value={stopLoss}
+                onChangeText={(text) => setStopLoss(text)}
+              />
+              <TextInput
+                inputMode="text"
+                style={styles.addDetails}
+                placeholder="Description (Comments,Startegy,etc.)"
+                value={description}
+                onChangeText={(text) => setDiscription(text)}
+                multiline={true}
+              />
+              <TouchableOpacity
+                style={styles.addDetailsButton}
+                onPress={() => alertShow()}
+              >
+                <Text style={styles.submitDetailstext}>Submit Detials</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
         <AwesomeAlert
@@ -209,16 +211,21 @@ const styles = StyleSheet.create({
   second: {
     marginTop: 15,
   },
+  logincard: {
+    backgroundColor: "#d8e0e4",
+    padding: 10,
+    borderRadius: 10,
+  },
   addDetails: {
     width: "90%",
     fontSize: 14,
     padding: 16,
     marginBottom: 15,
     marginHorizontal: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#f1f4f6",
     borderRadius: 10,
     elevation: 5,
-    shadowColor: "#fff",
+    shadowColor: "#f1f4f6",
     shadowOffset: {
       width: 0,
       height: 10,
