@@ -2,23 +2,113 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import Home from "./Home";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { PORT } from "@env";
 
 const chartIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/chartIcon.gif");
 
-export default function Register() {
+export default function Register({ navigation }) {
   const [userName, setUsername] = useState("");
+  const [phoneNo, setPhoneNo] = useState("");
   const [emailId, setEmailId] = useState("");
-  const [birthDate, setBirthDate] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [errors, setErrors] = useState({});
+  const [spinner, setSpinner] = useState(false);
+
+  const registerUser = async () => {
+    try {
+      const url = "http://" + PORT + "/users/signUp";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: userName,
+          phoneNo: phoneNo,
+          email: emailId,
+          password: password,
+        }),
+      });
+
+      const data = await response;
+      return await data.status;
+    } catch (error) {
+      ToastAndroid.show("Something went wrong!", ToastAndroid.SHORT);
+    }
+  };
+
+  const validateForm = () => {
+    let errors = {};
+    if (!userName) errors.userName = "Username is required";
+    if (!phoneNo) errors.phoneNo = "Phone No Price is required";
+    if (!emailId) errors.emailId = "Email Id is required";
+    if (!password) errors.password = "Password is required";
+    if (!password2) errors.password2 = "password is required";
+
+    if (Object.keys(errors).length) {
+      ToastAndroid.show("Please fill all details !", ToastAndroid.SHORT);
+    } else if (password != password2) {
+      ToastAndroid.show("Password do not match!", ToastAndroid.SHORT);
+      errors.passwordMatch = "Passwords do not match";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  handleRegister = async () => {
+    if (validateForm()) {
+      setSpinner(true);
+      const status = await registerUser();
+      if (status === 201) {
+        ToastAndroid.show(
+          "User Registered, Please Login to continue!",
+          ToastAndroid.SHORT
+        );
+        setTimeout(() => {
+          navigation.navigate("Login");
+          setUsername("");
+          setPhoneNo("");
+          setEmailId("");
+          setPassword("");
+          setPassword2("");
+          setErrors({});
+        }, 500);
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, 500);
+      } else if (status === 400) {
+        ToastAndroid.show(
+          "User Already Registered, Please LogIn to continue!",
+          ToastAndroid.SHORT
+        );
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, 500);
+      } else {
+        ToastAndroid.show("Please try again!", ToastAndroid.SHORT);
+      }
+      setSpinner(false);
+    }
+  };
+
+  toSignIn = () => {
+    setTimeout(() => {
+      navigation.navigate("Login");
+    }, 500);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -41,6 +131,13 @@ export default function Register() {
               onChangeText={(text) => setUsername(text)}
             />
             <TextInput
+              inputMode="numeric"
+              style={styles.addDetails}
+              placeholder="Phone number"
+              value={phoneNo}
+              onChangeText={(text) => setPhoneNo(text)}
+            />
+            <TextInput
               style={styles.addDetails}
               placeholder="Email Id"
               value={emailId}
@@ -48,15 +145,9 @@ export default function Register() {
               onChangeText={(text) => setEmailId(text)}
             />
             <TextInput
-              inputMode="text"
-              style={styles.addDetails}
-              placeholder="01/01/2001"
-              value={birthDate}
-              onChangeText={(text) => setBirthDate(text)}
-            />
-            <TextInput
               style={styles.addDetails}
               placeholder="Password"
+              secureTextEntry={true}
               value={password}
               inputMode="text"
               onChangeText={(text) => setPassword(text)}
@@ -64,20 +155,22 @@ export default function Register() {
             <TextInput
               style={styles.addDetails}
               placeholder="Password"
-              value={password}
+              secureTextEntry={true}
+              value={password2}
               inputMode="text"
-              onChangeText={(text) => setPassword(text)}
+              onChangeText={(text) => setPassword2(text)}
             />
           </View>
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => alertShow()}
+            onPress={() => handleRegister()}
           >
-            <Text style={styles.submitDetailstext}>Login</Text>
+            {!spinner && <Text style={styles.submitDetailstext}>Register</Text>}
+            {spinner && <ActivityIndicator size="small" color="white" />}
           </TouchableOpacity>
           <View style={styles.noAccount}>
             <Text style={styles.donttext}>Already have an account?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => toSignIn()}>
               <Text style={styles.signUp}>Sign in</Text>
             </TouchableOpacity>
           </View>

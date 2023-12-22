@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Image,
@@ -9,16 +9,18 @@ import {
   ToastAndroid,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { PORT, API_USER, API_PASS } from "@env";
-import base64 from "react-native-base64";
+import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
+import DataContext from "../Context/DataContext";
 
 const backIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/left-arrow.png");
 const dotIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/dots.png");
 const stockDetailsIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/stockDetailsIcon.gif");
 
 const InfoScreen = ({ route, navigation }) => {
+  const { userDetails } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [bearerToken] = useState(userDetails.token);
 
   const deleteStocks = async (id) => {
     try {
@@ -26,7 +28,7 @@ const InfoScreen = ({ route, navigation }) => {
       const response = await fetch(url, {
         method: "DELETE",
         headers: {
-          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
+          Authorization: "Bearer " + bearerToken,
         },
       });
       const data = await response;

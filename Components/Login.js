@@ -7,15 +7,95 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ScrollView,
+  ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PORT } from "@env";
+import DataContext from "../Context/DataContext";
 
 const chartIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/chartIcon.gif");
 
-export default function Login() {
-  const [emailId, setEmailId] = useState("");
+export default function Login({ navigation }) {
+  const { setUserDetails } = useContext(DataContext);
+  const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [spinner, setSpinner] = useState(false);
+
+  const loginUser = async () => {
+    try {
+      const url = "http://" + PORT + "/users/signIn";
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          phoneNo: phoneNo,
+          password: password,
+        }),
+      });
+
+      const data = await response;
+      const userDetails = await data.json();
+      setUserDetails(userDetails);
+      // console.log("data", userDetails);
+      return await data.status;
+    } catch (error) {
+      ToastAndroid.show("Something went wrong!", ToastAndroid.SHORT);
+    }
+  };
+
+  const validateForm = () => {
+    let errors = {};
+    if (!phoneNo) errors.phoneNo = "Phone No Price is required";
+    if (!password) errors.password = "Password is required";
+
+    if (Object.keys(errors).length) {
+      ToastAndroid.show("Please fill all details !", ToastAndroid.SHORT);
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  handleLogin = async () => {
+    if (validateForm()) {
+      setSpinner(true);
+      const status = await loginUser();
+      if (status === 201) {
+        ToastAndroid.show("Welcome Back!", ToastAndroid.SHORT);
+        setTimeout(() => {
+          navigation.navigate("Home");
+          setPhoneNo("");
+          setPassword("");
+          setErrors({});
+        }, 500);
+      } else if (status === 400) {
+        ToastAndroid.show("Invalid Credentials!", ToastAndroid.SHORT);
+      } else if (status === 404) {
+        ToastAndroid.show(
+          "User not registered, Please SignUp!",
+          ToastAndroid.SHORT
+        );
+        setTimeout(() => {
+          navigation.navigate("Register");
+        }, 500);
+      } else {
+        ToastAndroid.show("Please try again!", ToastAndroid.SHORT);
+      }
+      setSpinner(false);
+    }
+  };
+
+  toSignUp = () => {
+    setTimeout(() => {
+      navigation.navigate("Register");
+    }, 500);
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -38,29 +118,31 @@ export default function Login() {
           </View>
           <View style={styles.loginInput}>
             <TextInput
-              inputMode="email"
+              inputMode="numeric"
               style={styles.addDetails}
-              placeholder="Email Id"
-              value={emailId}
-              onChangeText={(text) => setEmailId(text)}
+              placeholder="Phone Number"
+              value={phoneNo}
+              onChangeText={(text) => setPhoneNo(text)}
             />
             <TextInput
               style={styles.addDetails}
               placeholder="Password"
               value={password}
+              secureTextEntry={true}
               inputMode="text"
               onChangeText={(text) => setPassword(text)}
             />
           </View>
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => alertShow()}
+            onPress={() => handleLogin()}
           >
-            <Text style={styles.submitDetailstext}>Login</Text>
+            {!spinner && <Text style={styles.submitDetailstext}>Login</Text>}
+            {spinner && <ActivityIndicator size="small" color="white" />}
           </TouchableOpacity>
           <View style={styles.noAccount}>
             <Text style={styles.donttext}>Don't have an account?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => toSignUp()}>
               <Text style={styles.signUp}>Sign up</Text>
             </TouchableOpacity>
           </View>

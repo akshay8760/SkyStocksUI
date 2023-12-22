@@ -11,6 +11,7 @@ import AdminPanel from "../Components/AdminPanel";
 import Settings from "../Components/Settings";
 import InfoScreen from "../Components/InfoScreen";
 import EditScreen from "../Components/EditScreen";
+import { DataProvider } from "../Context/DataContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -92,21 +93,23 @@ function NavigateToHomeScreen() {
 
 const RootStack = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen
-          name="Home"
-          component={NavigateToHomeScreen}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DataProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen
+            name="Home"
+            component={NavigateToHomeScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DataProvider>
   );
 };
 

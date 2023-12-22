@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -14,16 +14,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useIsFocused } from "@react-navigation/native";
 import TitleSection from "./TitleSection";
 import base64 from "react-native-base64";
-import { useNavigation } from "@react-navigation/native";
-import { PORT, API_USER, API_PASS } from "@env";
+import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
+import DataContext from "../Context/DataContext";
 
 const backIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/left-arrow.png");
 const dotIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/dots.png");
 
 const EditScreen = ({ route, navigation }) => {
   const stockDetails = route.params.stockDetails.stockDetails;
-
+  const { userDetails } = useContext(DataContext);
   const [name, setName] = useState(stockDetails.name);
   const [entryPrice, setEntryPrice] = useState(
     stockDetails.entryPrice.toLocaleString()
@@ -36,6 +36,7 @@ const EditScreen = ({ route, navigation }) => {
   const [errors, setErrors] = useState({});
   const [showAlert, setShowAlert] = useState(false);
   const isFocused = useIsFocused();
+  const [bearerToken] = useState(userDetails.token);
 
   const editStocksDetails = async (id) => {
     const date = new Date();
@@ -46,7 +47,7 @@ const EditScreen = ({ route, navigation }) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
+          Authorization: "Bearer " + bearerToken,
         },
         body: JSON.stringify({
           name: name,

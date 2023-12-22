@@ -15,18 +15,19 @@ import { PORT, API_USER, API_PASS } from "@env";
 
 const CardsSection = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { searchKeyword } = useContext(DataContext);
+  const { searchKeyword, userDetails } = useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [loader, setLoader] = useState(true);
   const [stockLength, setStockLength] = useState();
+  const [bearerToken] = useState(userDetails.token);
 
   const fetchData = async () => {
     try {
       const url = "http://" + PORT + "/stocks";
       const response = await fetch(url, {
         headers: {
-          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
+          Authorization: "Bearer " + bearerToken,
         },
       });
       const data = await response.json();

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,9 +17,11 @@ import base64 from "react-native-base64";
 import { useNavigation } from "@react-navigation/native";
 import { PORT, API_USER, API_PASS } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
+import DataContext from "../Context/DataContext";
 
 const AddStocks = () => {
   const navigation = useNavigation();
+  const { userDetails } = useContext(DataContext);
   const [name, setName] = useState("");
   const [entryPrice, setEntryPrice] = useState("");
   const [target, setTarget] = useState("");
@@ -28,6 +30,7 @@ const AddStocks = () => {
   const [errors, setErrors] = useState({});
   const [showAlert, setShowAlert] = useState(false);
   const isFocused = useIsFocused();
+  const [bearerToken] = useState(userDetails.token);
 
   const saveStocksDetails = async () => {
     try {
@@ -37,7 +40,7 @@ const AddStocks = () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: "Basic " + base64.encode(API_USER + ":" + API_PASS),
+          Authorization: "Bearer " + bearerToken,
         },
         body: JSON.stringify({
           name: name,
