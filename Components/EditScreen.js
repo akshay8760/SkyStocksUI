@@ -126,8 +126,8 @@ const EditScreen = ({ route, navigation }) => {
             />
           </TouchableOpacity>
         </View>
-        <TitleSection title={"Edit Stock"} />
         <ScrollView style={styles.scrollMe}>
+          <TitleSection title={"Edit Stock"} />
           <View style={styles.second}>
             <TextInput
               inputMode="text"
@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 20,
     width: "110%",
-    height: 450,
   },
   second: {
     marginTop: 15,

@@ -68,21 +68,20 @@ const InfoScreen = ({ route, navigation }) => {
               style={styles.backIconStyle}
             />
           </TouchableOpacity>
-          <Text style={styles.header}>Detail</Text>
           <Image
             source={dotIcon}
             resizeMode="contain"
             style={styles.dotIconStyle}
           />
         </View>
-        <View style={styles.imageSection}>
-          <Image
-            source={stockDetailsIcon}
-            resizeMode="contain"
-            style={styles.stockDetailsStyle}
-          />
-        </View>
         <ScrollView style={styles.scrollMe}>
+          <View style={styles.imageSection}>
+            <Image
+              source={stockDetailsIcon}
+              resizeMode="contain"
+              style={styles.stockDetailsStyle}
+            />
+          </View>
           <View style={styles.headSection}>
             <View style={styles.topTextArea}>
               <Text style={styles.stockNameStyle}>
@@ -188,7 +187,7 @@ const styles = StyleSheet.create({
   },
   imageSection: {
     width: "100%",
-    height: 220,
+    height: 150,
     justifyContent: "center",
     alignItems: "center",
     // backgroundColor: "red",
@@ -263,8 +262,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 20,
     width: "110%",
-    height: 400,
-    marginBottom: 60,
   },
   editDeleteStyle: {
     marginTop: 40,

@@ -1,9 +1,15 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const menuIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/menu.png");
 const faceIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/face.png");
 
 const HeaderSection = () => {
+  const navigation = useNavigation();
+  userDashboard = () => {
+    navigation.navigate("UserDetails");
+  };
+
   return (
     <View style={styles.headerSection}>
       <Image
@@ -11,11 +17,13 @@ const HeaderSection = () => {
         resizeMode="contain"
         style={styles.menuIconStyle}
       />
-      <Image
-        source={faceIcon}
-        resizeMode="contain"
-        style={styles.faceIconStyle}
-      />
+      <TouchableOpacity onPress={userDashboard}>
+        <Image
+          source={faceIcon}
+          resizeMode="contain"
+          style={styles.faceIconStyle}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

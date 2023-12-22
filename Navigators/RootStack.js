@@ -12,6 +12,7 @@ import Settings from "../Components/Settings";
 import InfoScreen from "../Components/InfoScreen";
 import EditScreen from "../Components/EditScreen";
 import { DataProvider } from "../Context/DataContext";
+import UserDetails from "../Components/UserDetails";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,6 +36,7 @@ function HomeStack() {
       <Stack.Screen name="Initial" component={HomeScreen} />
       <Stack.Screen name="Info" component={InfoScreen} />
       <Stack.Screen name="Edit" component={EditScreen} />
+      <Stack.Screen name="UserDetails" component={UserDetails} />
     </Stack.Navigator>
   );
 }
@@ -71,7 +73,7 @@ function NavigateToHomeScreen() {
           marginTop: 4,
         },
         tabBarStyle: {
-          position: "absolute",
+          position: "fixed",
           paddingTop: 6,
           paddingBottom: 6,
           backgroundColor: "white",

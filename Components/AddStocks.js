@@ -111,15 +111,15 @@ const AddStocks = () => {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea]}>
       <KeyboardAvoidingView
         behavior="padding"
         keyboardVerticalOffset={0}
         style={styles.container}
       >
         <HeaderSection />
-        <TitleSection title={"Add Stock"} />
         <ScrollView style={styles.scrollMe}>
+          <TitleSection title={"Add Stock"} />
           <View style={styles.second}>
             <TextInput
               inputMode="text"
@@ -205,7 +205,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 20,
     width: "110%",
-    height: 450,
   },
   second: {
     marginTop: 15,

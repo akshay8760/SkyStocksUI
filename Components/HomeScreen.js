@@ -15,16 +15,13 @@ const HomeScreen = ({ navigation }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    console.log("logOut", logOut);
     if (!logOut) {
       const unsubscribe = navigation.addListener("beforeRemove", (e) => {
         e.preventDefault();
         setShowAlert(true);
-        console.log("back Pressed2");
       });
       if (logOut) {
         const unsubscribe = navigation.addListener("beforeRemove", (e) => {
-          console.log("Logged Out");
           return true;
         });
       }
