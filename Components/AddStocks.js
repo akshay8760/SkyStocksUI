@@ -30,7 +30,6 @@ const AddStocks = () => {
   const isFocused = useIsFocused();
 
   const saveStocksDetails = async () => {
-    const date = new Date();
     try {
       const url = "http://" + PORT + "/stocks";
       const response = await fetch(url, {
@@ -46,7 +45,6 @@ const AddStocks = () => {
           stopLoss: stopLoss,
           target: target,
           strategy: description,
-          dateTime: date.toLocaleString(),
         }),
       });
 
@@ -70,7 +68,6 @@ const AddStocks = () => {
   };
 
   const handleSubmit = async () => {
-    const date = new Date();
     if ((await saveStocksDetails()) === 200) {
       setName("");
       setEntryPrice("");
@@ -81,8 +78,8 @@ const AddStocks = () => {
       ToastAndroid.show("Stock added successfully !", ToastAndroid.SHORT);
       setShowAlert(false);
       setTimeout(() => {
-        navigation.navigate("Home");
-      }, 1000);
+        navigation.navigate("HomeScreen");
+      }, 500);
     } else {
       setShowAlert(false);
       ToastAndroid.show("Please try again !", ToastAndroid.SHORT);

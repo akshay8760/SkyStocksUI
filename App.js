@@ -4,5 +4,5 @@ import Register from "./Components/Register";
 import Home from "./Components/Home";
 
 export default function App() {
-  return <Home />;
+  return <RootStack />;
 }

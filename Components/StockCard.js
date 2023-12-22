@@ -11,7 +11,9 @@ const Stockcard = ({ stockList, stockLength, navigation }) => {
             key={item._id}
             activeOpacity={0.5}
             onPress={() =>
-              navigation.navigate("Info", { stockDetails: { item } })
+              setTimeout(() => {
+                navigation.navigate("Info", { stockDetails: { item } });
+              }, 500)
             }
           >
             <View style={styles.infoArea}>

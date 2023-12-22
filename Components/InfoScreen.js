@@ -121,7 +121,11 @@ const InfoScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.editButtonStyle}
               onPress={() =>
-                navigation.navigate("Edit", { stockDetails: { stockDetails } })
+                setTimeout(() => {
+                  navigation.navigate("Edit", {
+                    stockDetails: { stockDetails },
+                  });
+                }, 500)
               }
             >
               <Text style={styles.submitDetailstext}>Edit</Text>
