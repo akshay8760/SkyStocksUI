@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ToastAndroid,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PORT } from "@env";
@@ -20,6 +21,7 @@ const stockDetailsIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/
 const InfoScreen = ({ route, navigation }) => {
   const { userDetails } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [bearerToken] = useState(userDetails.token);
 
   const deleteStocks = async (id) => {
@@ -56,104 +58,146 @@ const InfoScreen = ({ route, navigation }) => {
     setShowAlert(true);
   };
 
+  const close = () => {
+    setShowDropdown(false);
+  };
+
   const stockDetails = route.params.stockDetails.item;
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <View style={styles.headerSection}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              source={backIcon}
-              resizeMode="contain"
-              style={styles.backIconStyle}
-            />
-          </TouchableOpacity>
-          <Image
-            source={dotIcon}
-            resizeMode="contain"
-            style={styles.dotIconStyle}
-          />
-        </View>
-        <ScrollView style={styles.scrollMe}>
-          <View style={styles.imageSection}>
-            <Image
-              source={stockDetailsIcon}
-              resizeMode="contain"
-              style={styles.stockDetailsStyle}
-            />
-          </View>
-          <View style={styles.headSection}>
-            <View style={styles.topTextArea}>
-              <Text style={styles.stockNameStyle}>
-                {stockDetails.name.toUpperCase()}
-              </Text>
-              <Text style={styles.dateTimeStyle}>{stockDetails.dateTime}</Text>
-              <Text style={styles.descriptionStyle}>
-                {stockDetails.strategy}
-              </Text>
-              <Text style={styles.recommendationStyle}>
-                Price Recommendation
-              </Text>
-            </View>
-          </View>
-          <View style={styles.infoPrice}>
-            <View style={styles.infoPriceSection}>
-              <Text style={styles.stopLossText}>🔴 StopLoss</Text>
-              <Text style={styles.priceAmount}>₹ {stockDetails.stopLoss}</Text>
-            </View>
-            <View>
-              <Text style={styles.entryPriceText}>🟢 Entry Price</Text>
-              <Text style={styles.priceAmount}>
-                ₹ {stockDetails.entryPrice}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.targetText}>🟠 Target</Text>
-              <Text style={styles.priceAmount}>₹ {stockDetails.target}</Text>
-            </View>
-          </View>
-          <View style={styles.editDeleteStyle}>
-            <TouchableOpacity
-              style={styles.deleteButtonStyle}
-              onPress={() => alertShow()}
-            >
-              <Text style={styles.submitDetailstext}>Delete</Text>
+    <TouchableWithoutFeedback onPress={close}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <View style={styles.headerSection}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Image
+                source={backIcon}
+                resizeMode="contain"
+                style={styles.backIconStyle}
+              />
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowDropdown(!showDropdown)}>
+              <Image
+                source={dotIcon}
+                resizeMode="contain"
+                style={styles.dotIconStyle}
+              />
+            </TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scrollMe}>
+            <View style={styles.imageSection}>
+              <Image
+                source={stockDetailsIcon}
+                resizeMode="contain"
+                style={styles.stockDetailsStyle}
+              />
+            </View>
+            <View style={styles.stockBodyStyle}>
+              <View>
+                <View style={styles.headSection}>
+                  <Text style={styles.stockNameStyle}>
+                    {stockDetails.name.toUpperCase()}
+                  </Text>
+                </View>
+                <View style={{ flexDirection: "column" }}>
+                  <View style={styles.detailstyle}>
+                    <Text style={styles.nameStyle}>Entry Price</Text>
+                    <Text style={styles.valueStyle}>
+                      {stockDetails.entryPrice}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.border} />
+                <View style={{ flexDirection: "column" }}>
+                  <View style={styles.detailstyle}>
+                    <Text style={styles.nameStyle}>Stoploss</Text>
+                    <Text style={styles.valueStyle}>
+                      {stockDetails.stopLoss}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.border} />
+                <View style={{ flexDirection: "column" }}>
+                  <View style={styles.detailstyle}>
+                    <Text style={styles.nameStyle}>Target</Text>
+                    <Text style={styles.valueStyle}>{stockDetails.target}</Text>
+                  </View>
+                </View>
+                <View style={styles.border} />
+                <View style={{ flexDirection: "column" }}>
+                  <View style={styles.detailstyle}>
+                    <Text style={styles.nameStyle}>Created At</Text>
+                    <Text style={styles.valueStyle}>
+                      {stockDetails.createdAt}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.border} />
+                <View style={{ flexDirection: "column" }}>
+                  <View style={styles.detailstyle}>
+                    <Text style={styles.nameStyle}>Updated At</Text>
+                    <Text style={styles.valueStyle}>
+                      {stockDetails.updatedAt}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.border} />
+              </View>
+              <View>
+                <Text style={styles.strategyStyle}>Strategy</Text>
+                <Text style={styles.strategyValueStyle}>
+                  {stockDetails.strategy}
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
+        </View>
+
+        {showDropdown && (
+          <View style={styles.editDelMenu}>
             <TouchableOpacity
-              style={styles.editButtonStyle}
               onPress={() =>
                 setTimeout(() => {
+                  setShowDropdown(false);
                   navigation.navigate("Edit", {
                     stockDetails: { stockDetails },
                   });
                 }, 500)
               }
             >
-              <Text style={styles.submitDetailstext}>Edit</Text>
+              <Text style={styles.editDeltext}>Edit</Text>
+            </TouchableOpacity>
+            <View style={styles.borderMenu} />
+            <TouchableOpacity
+              onPress={() => {
+                setShowDropdown(false);
+                alertShow();
+              }}
+            >
+              <Text style={styles.editDeltext}>Delete</Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
-      </View>
-      <AwesomeAlert
-        show={showAlert}
-        showProgress={false}
-        title="Warning!"
-        message="Are you sure you want to delete this item?"
-        closeOnTouchOutside={false}
-        closeOnHardwareBackPress={false}
-        showCancelButton={true}
-        showConfirmButton={true}
-        cancelText="No, cancel"
-        confirmText="Yes, delete it"
-        confirmButtonColor="#ff5722"
-        onCancelPressed={() => {
-          alertHide();
-        }}
-        onConfirmPressed={() => {
-          handleDelete(stockDetails._id);
-        }}
-      />
-    </SafeAreaView>
+        )}
+        <AwesomeAlert
+          show={showAlert}
+          showProgress={false}
+          title="Warning!"
+          message="Are you sure you want to delete this item?"
+          closeOnTouchOutside={false}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText="No, cancel"
+          confirmText="Yes, delete it"
+          confirmButtonColor="#ff5722"
+          onCancelPressed={() => {
+            alertHide();
+          }}
+          onConfirmPressed={() => {
+            handleDelete(stockDetails._id);
+          }}
+        />
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -196,66 +240,40 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
-  stockNameStyle: {
-    fontSize: 36,
-    fontWeight: "800",
+  stockBodyStyle: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#f1f4f6",
   },
-  dateTimeStyle: {
-    fontSize: 13,
-    paddingHorizontal: 5,
-    fontWeight: "600",
-    color: "#696969",
-  },
-  descriptionStyle: {
-    marginTop: 30,
-    fontWeight: "400",
-    letterSpacing: 0.1,
-    paddingHorizontal: 5,
-    lineHeight: 18,
-    color: "#696969",
-    fontSize: 18,
-  },
-  recommendationStyle: {
-    marginTop: 30,
-    fontSize: 20,
-    fontWeight: "600",
-    paddingHorizontal: 5,
-  },
-  infoPrice: {
-    marginTop: 20,
-    fontSize: 12,
+  headSection: {
     flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-evenly",
-    color: "#696969",
-    fontWeight: "bold",
-  },
-  stopLossText: {
     textAlign: "center",
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#f44336",
-    marginBottom: 4,
+    justifyContent: "center",
+    marginBottom: 15,
   },
-  entryPriceText: {
-    textAlign: "center",
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#4caf50",
-    marginBottom: 4,
+  detailstyle: {
+    flexDirection: "row",
+    height: 50,
+    //backgroundColor: "#fff",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
   },
-  targetText: {
-    textAlign: "center",
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#ff9800",
-    marginBottom: 4,
+  nameStyle: {
+    textAlignVertical: "center",
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#455a64",
   },
-  priceAmount: {
-    textAlign: "center",
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#696969",
+  valueStyle: {
+    textAlignVertical: "center",
+    fontSize: 16,
+    fontWeight: "500",
+    color: "#455a64",
+  },
+  stockNameStyle: {
+    fontSize: 26,
+    fontWeight: "800",
+    color: "#000",
   },
   scrollMe: {
     marginLeft: -15,
@@ -263,45 +281,41 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     width: "110%",
   },
-  editDeleteStyle: {
-    marginTop: 40,
-    width: "100%",
+  border: {
+    borderBottomColor: "#abb8c3",
+    borderBottomWidth: 1,
+    marginHorizontal: 14,
+  },
+  strategyStyle: {
     flexDirection: "row",
-    justifyContent: "center",
-  },
-  submitDetailstext: {
-    fontSize: 20,
-    color: "#fff",
     textAlign: "center",
-    fontWeight: "600",
+    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#000",
+    margin: 10,
   },
-  deleteButtonStyle: {
-    width: "40%",
-    padding: 20,
-    marginHorizontal: 10,
-    backgroundColor: "#f44336",
-    borderRadius: 10,
-    elevation: 5,
-    shadowColor: "#f44336",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
+  strategyValueStyle: {
+    paddingHorizontal: 10,
+    color: "#455a64",
+    // color: "#607d8b",
+    textAlign: "justify",
   },
-  editButtonStyle: {
-    width: "40%",
-    padding: 20,
-    backgroundColor: "#abb8c3",
+  borderMenu: {
+    borderBottomColor: "#abb8c3",
+    borderBottomWidth: 1,
+  },
+  editDelMenu: {
+    position: "absolute",
+    top: 90,
+    right: 30,
+    padding: 6,
+    width: 100,
     borderRadius: 10,
-    elevation: 5,
-    shadowColor: "#abb8c3",
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
+    backgroundColor: "#455a64",
+  },
+  editDeltext: {
+    color: "#fff",
+    padding: 5,
   },
 });
