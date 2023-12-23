@@ -39,8 +39,10 @@ const styles = StyleSheet.create({
   },
   menuIconStyle: {
     width: 40,
+    height: 40,
   },
   faceIconStyle: {
     width: 40,
+    height: 40,
   },
 });
