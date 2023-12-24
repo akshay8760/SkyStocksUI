@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Stockcard = ({ stockList, stockLength, navigation }) => {
+  convertUTCDateToLocalDate = (date) => {
+    var localDate = new Date(date).toLocaleString("en-IN", {
+      localeMatcher: "best fit",
+      timeZoneName: "short",
+    });
+    localDate = localDate.substring(0, 23);
+
+    return localDate;
+  };
+
   return stockLength ? (
     <View>
       {stockList.map((item) => {
@@ -18,7 +28,9 @@ const Stockcard = ({ stockList, stockLength, navigation }) => {
           >
             <View style={styles.infoArea}>
               <Text style={styles.infoTitle}>{item.name.toUpperCase()}</Text>
-              <Text style={styles.infoSub}>{item.dateTime}</Text>
+              <Text style={styles.infoSub}>
+                {convertUTCDateToLocalDate(item.updatedAt)}
+              </Text>
               <View style={styles.infoPrice}>
                 <View style={styles.infoPriceSection}>
                   <Text style={styles.stopLossText}>🔴 StopLoss</Text>

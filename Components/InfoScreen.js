@@ -62,7 +62,20 @@ const InfoScreen = ({ route, navigation }) => {
     setShowDropdown(false);
   };
 
+  convertUTCDateToLocalDate = (date) => {
+    var localDate = new Date(date).toLocaleString("en-IN", {
+      localeMatcher: "best fit",
+      timeZoneName: "short",
+    });
+    localDate = localDate.substring(0, 23);
+
+    return localDate;
+  };
+
   const stockDetails = route.params.stockDetails.item;
+  var createdAt = convertUTCDateToLocalDate(new Date(stockDetails.createdAt));
+  var updatedAt = convertUTCDateToLocalDate(new Date(stockDetails.updatedAt));
+
   return (
     <TouchableWithoutFeedback onPress={close}>
       <SafeAreaView style={styles.safeArea}>
@@ -126,18 +139,14 @@ const InfoScreen = ({ route, navigation }) => {
                 <View style={{ flexDirection: "column" }}>
                   <View style={styles.detailstyle}>
                     <Text style={styles.nameStyle}>Created At</Text>
-                    <Text style={styles.valueStyle}>
-                      {stockDetails.createdAt}
-                    </Text>
+                    <Text style={styles.valueStyle}>{createdAt}</Text>
                   </View>
                 </View>
                 <View style={styles.border} />
                 <View style={{ flexDirection: "column" }}>
                   <View style={styles.detailstyle}>
                     <Text style={styles.nameStyle}>Updated At</Text>
-                    <Text style={styles.valueStyle}>
-                      {stockDetails.updatedAt}
-                    </Text>
+                    <Text style={styles.valueStyle}>{updatedAt}</Text>
                   </View>
                 </View>
                 <View style={styles.border} />
