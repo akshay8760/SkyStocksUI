@@ -15,7 +15,7 @@ import { useContext, useState } from "react";
 import { PORT } from "@env";
 import DataContext from "../Context/DataContext";
 
-const chartIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/chartIcon.gif");
+const chartIcon = require("../assets/icons/chartIcon.gif");
 
 export default function Login({ navigation }) {
   const { setUserDetails } = useContext(DataContext);

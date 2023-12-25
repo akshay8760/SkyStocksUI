@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import { PORT } from "@env";
 
-const chartIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/chartIcon.gif");
+const chartIcon = require("../assets/icons/chartIcon.gif");
 
 export default function Register({ navigation }) {
   const [userName, setUsername] = useState("");

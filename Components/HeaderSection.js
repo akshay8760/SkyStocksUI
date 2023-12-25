@@ -1,8 +1,8 @@
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const menuIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/menu.png");
-const faceIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/face.png");
+const menuIcon = require("../assets/icons/menu.png");
+const faceIcon = require("../assets/icons/face.png");
 
 const HeaderSection = () => {
   const navigation = useNavigation();

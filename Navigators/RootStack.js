@@ -17,14 +17,14 @@ import UserDetails from "../Components/UserDetails";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const homeIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/home.png");
-const homeIcon_active = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/home-active.png");
-const addStockIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/trend.png");
-const addStockIcon_active = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/trend-active.png");
-const adminpanelIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/admin.png");
-const adminPanelIcon_active = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/admin-active.png");
-const settingsicon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/settings.png");
-const SettingsIcon_active = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/settings-active.png");
+const homeIcon = require("../assets/icons/home.png");
+const homeIcon_active = require("../assets/icons/home-active.png");
+const addStockIcon = require("../assets/icons/trend.png");
+const addStockIcon_active = require("../assets/icons/trend-active.png");
+const adminpanelIcon = require("../assets/icons/admin.png");
+const adminPanelIcon_active = require("../assets/icons/admin-active.png");
+const settingsicon = require("../assets/icons/settings.png");
+const SettingsIcon_active = require("../assets/icons/settings-active.png");
 
 function HomeStack() {
   return (

@@ -16,7 +16,7 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import DataContext from "../Context/DataContext";
 import Calendar from "./Calendar";
 
-const closeIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/close.png");
+const closeIcon = require("../assets/icons/close.png");
 
 const HomeScreen = ({ navigation }) => {
   const { logOut, showCalendar, setShowCalendar } = useContext(DataContext);

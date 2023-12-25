@@ -14,9 +14,9 @@ import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DataContext from "../Context/DataContext";
 
-const backIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/left-arrow.png");
-const dotIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/dots.png");
-const stockDetailsIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/stockDetailsIcon.gif");
+const backIcon = require("../assets/icons/left-arrow.png");
+const dotIcon = require("../assets/icons/dots.png");
+const stockDetailsIcon = require("../assets/icons/stockDetailsIcon.gif");
 
 const InfoScreen = ({ route, navigation }) => {
   const { userDetails } = useContext(DataContext);

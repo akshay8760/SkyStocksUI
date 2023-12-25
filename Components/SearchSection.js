@@ -2,7 +2,7 @@ import { View, Image, StyleSheet, TextInput } from "react-native";
 import { useContext } from "react";
 import DataContext from "../Context/DataContext";
 
-const magnifyingIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/magnifying-glass.png");
+const magnifyingIcon = require("../assets/icons/magnifying-glass.png");
 
 const SearchSection = () => {
   const { setSearchKeyword } = useContext(DataContext);

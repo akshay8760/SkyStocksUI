@@ -18,8 +18,8 @@ import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
 import DataContext from "../Context/DataContext";
 
-const backIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/left-arrow.png");
-const dotIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/dots.png");
+const backIcon = require("../assets/icons/left-arrow.png");
+const dotIcon = require("../assets/icons/dots.png");
 
 const EditScreen = ({ route, navigation }) => {
   const stockDetails = route.params.stockDetails.stockDetails;

@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import DataContext from "../Context/DataContext";
-const calendarIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/calendar.png");
-const refreshIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/refresh.png");
+const calendarIcon = require("../assets/icons/calendar.png");
+const refreshIcon = require("../assets/icons/refresh.png");
 
 const TypesSection = () => {
   const {
