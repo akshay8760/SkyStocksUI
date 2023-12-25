@@ -7,7 +7,7 @@ export const DataProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState({});
   const [logOut, setLogOut] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("All");
 
   return (
     <DataContext.Provider

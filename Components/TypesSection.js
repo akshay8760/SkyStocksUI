@@ -4,17 +4,29 @@ import DataContext from "../Context/DataContext";
 const calendarIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/calendar.png");
 
 const TypesSection = () => {
-  const { showCalendar, setShowCalendar, setSelectedDate } =
+  const { showCalendar, setShowCalendar, setSelectedDate, selectedDate } =
     useContext(DataContext);
 
   return (
     <View style={styles.typeSection}>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => setSelectedDate("All")}>
-          <Text style={styles.typetextActive}>All</Text>
+          <Text
+            style={
+              selectedDate === "All" ? styles.typetextActive : styles.typetext
+            }
+          >
+            All
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setSelectedDate("Today")}>
-          <Text style={styles.typetextActive}>Today</Text>
+          <Text
+            style={
+              selectedDate === "Today" ? styles.typetextActive : styles.typetext
+            }
+          >
+            Today
+          </Text>
         </TouchableOpacity>
       </View>
       <View>
