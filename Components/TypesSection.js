@@ -2,10 +2,17 @@ import { useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import DataContext from "../Context/DataContext";
 const calendarIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/calendar.png");
+const refreshIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/refresh.png");
 
 const TypesSection = () => {
-  const { showCalendar, setShowCalendar, setSelectedDate, selectedDate } =
-    useContext(DataContext);
+  const {
+    showCalendar,
+    setShowCalendar,
+    setSelectedDate,
+    selectedDate,
+    refreshList,
+    setRefreshList,
+  } = useContext(DataContext);
 
   return (
     <View style={styles.typeSection}>
@@ -29,7 +36,18 @@ const TypesSection = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          onPress={() => {
+            setRefreshList(!refreshList);
+          }}
+        >
+          <Image
+            source={refreshIcon}
+            resizeMode="contain"
+            style={styles.calendarIconStyle}
+          />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             setShowCalendar(!showCalendar);
@@ -74,5 +92,6 @@ const styles = StyleSheet.create({
   calendarIconStyle: {
     height: 20,
     width: 20,
+    marginLeft: 10,
   },
 });

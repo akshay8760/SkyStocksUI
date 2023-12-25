@@ -67,7 +67,7 @@ function NavigateToHomeScreen() {
             />
           );
         },
-        tabBarShowLabel: true,
+        tabBarShowLabel: false,
         tabBarLabelStyle: {
           fontSize: 10,
           marginTop: 4,

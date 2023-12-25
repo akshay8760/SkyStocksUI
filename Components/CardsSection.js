@@ -14,8 +14,13 @@ import { PORT } from "@env";
 
 const CardsSection = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { searchKeyword, userDetails, selectedDate, showCalendar } =
-    useContext(DataContext);
+  const {
+    searchKeyword,
+    userDetails,
+    selectedDate,
+    showCalendar,
+    refreshList,
+  } = useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -44,7 +49,7 @@ const CardsSection = ({ navigation }) => {
   useEffect(() => {
     // Update the document title using the browser API
     fetchData();
-  }, [isFocused]); // [isFocused]
+  }, [refreshList]); // [isFocused]
 
   useEffect(() => {
     const results = allStocks.filter((stocks) => {

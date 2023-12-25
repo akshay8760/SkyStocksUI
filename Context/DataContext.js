@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
   const [logOut, setLogOut] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState("All");
+  const [refreshList, setRefreshList] = useState(false);
 
   return (
     <DataContext.Provider
@@ -22,6 +23,8 @@ export const DataProvider = ({ children }) => {
         setShowCalendar,
         selectedDate,
         setSelectedDate,
+        refreshList,
+        setRefreshList,
       }}
     >
       {children}
