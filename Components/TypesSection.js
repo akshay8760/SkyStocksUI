@@ -1,19 +1,28 @@
+import { useContext } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import DataContext from "../Context/DataContext";
 const calendarIcon = require("/Users/arishabh/Desktop/RestAPI/Sky Stocks UI/AwesomeProject/assets/icons/calendar.png");
 
 const TypesSection = () => {
+  const { showCalendar, setShowCalendar, setSelectedDate } =
+    useContext(DataContext);
+
   return (
     <View style={styles.typeSection}>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setSelectedDate("All")}>
           <Text style={styles.typetextActive}>All</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.typetext}>Today</Text>
+        <TouchableOpacity onPress={() => setSelectedDate("Today")}>
+          <Text style={styles.typetextActive}>Today</Text>
         </TouchableOpacity>
       </View>
       <View>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setShowCalendar(!showCalendar);
+          }}
+        >
           <Image
             source={calendarIcon}
             resizeMode="contain"
@@ -42,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     paddingHorizontal: 10,
     paddingVertical: 1,
-    borderRadius: 12,
+    borderRadius: 10,
   },
   typetext: {
     fontSize: 15,

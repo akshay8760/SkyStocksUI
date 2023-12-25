@@ -14,7 +14,8 @@ import { PORT } from "@env";
 
 const CardsSection = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const { searchKeyword, userDetails } = useContext(DataContext);
+  const { searchKeyword, userDetails, selectedDate, showCalendar } =
+    useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -54,8 +55,31 @@ const CardsSection = ({ navigation }) => {
     setStockLength(results.length);
   }, [searchKeyword]);
 
+  useEffect(() => {
+    let results;
+    if (selectedDate === "All") {
+      results = allStocks;
+    } else if (selectedDate === "Today") {
+      var today = new Date();
+      var year = today.getFullYear();
+      var mon = today.getMonth() + 1;
+      var day = today.getDate();
+      var fecha = year + "-" + mon + "-" + day;
+      results = allStocks.filter((stocks) => {
+        return stocks?.updatedAt?.includes(fecha);
+      });
+    } else if (selectedDate) {
+      results = allStocks.filter((stocks) => {
+        return stocks?.updatedAt?.includes(selectedDate);
+      });
+    }
+
+    setFilteredStocks(results);
+    setStockLength(results?.length);
+  }, [selectedDate]);
+
   return (
-    <View style={styles.listSection}>
+    <View style={showCalendar ? styles.listSectionBlur : styles.listSection}>
       <Text style={styles.headText}>Recommendations</Text>
       <ScrollView style={styles.cardPallete}>
         {loader ? (
@@ -84,6 +108,11 @@ const styles = StyleSheet.create({
   listSection: {
     marginTop: 25,
     marginBottom: 280,
+  },
+  listSectionBlur: {
+    marginTop: 25,
+    marginBottom: 280,
+    opacity: 0.5,
   },
   headText: {
     fontSize: 18,

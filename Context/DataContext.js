@@ -6,6 +6,8 @@ export const DataProvider = ({ children }) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [userDetails, setUserDetails] = useState({});
   const [logOut, setLogOut] = useState(false);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
 
   return (
     <DataContext.Provider
@@ -16,6 +18,10 @@ export const DataProvider = ({ children }) => {
         setUserDetails,
         logOut,
         setLogOut,
+        showCalendar,
+        setShowCalendar,
+        selectedDate,
+        setSelectedDate,
       }}
     >
       {children}
