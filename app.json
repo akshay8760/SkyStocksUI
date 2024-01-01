@@ -4,7 +4,7 @@
     "slug": "SkyStocks",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/lighting.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,14 +16,27 @@
       "supportsTablet": true
     },
     "android": {
+      "usesCleartextTraffic": true,
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icons/lighting.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.skystocks31.SkyStocks"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2bad897a-d116-4c6d-9e80-b4bd80f21c8e"
+      }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#e7e7e7",
+      "barStyle": "dark-content",
+      "translucent": true,
+      "hidden": false
     }
   }
 }

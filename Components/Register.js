@@ -27,7 +27,7 @@ export default function Register({ navigation }) {
 
   const registerUser = async () => {
     try {
-      const url = "http://" + PORT + "/users/signUp";
+      const url = PORT + "/users/signUp";
       const response = await fetch(url, {
         method: "POST",
         headers: {

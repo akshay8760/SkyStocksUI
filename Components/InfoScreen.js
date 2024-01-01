@@ -26,7 +26,7 @@ const InfoScreen = ({ route, navigation }) => {
 
   const deleteStocks = async (id) => {
     try {
-      const url = "http://" + PORT + "/stocks/" + id;
+      const url = PORT + "/stocks/" + id;
       const response = await fetch(url, {
         method: "DELETE",
         headers: {
@@ -67,8 +67,13 @@ const InfoScreen = ({ route, navigation }) => {
       localeMatcher: "best fit",
       timeZoneName: "short",
     });
-    localDate = localDate.substring(0, 23);
-
+    let index;
+    if (localDate.indexOf("am") > 0) {
+      index = localDate.indexOf("am") + 2;
+    } else {
+      index = localDate.indexOf("pm") + 2;
+    }
+    localDate = localDate.substring(0, index);
     return localDate;
   };
 

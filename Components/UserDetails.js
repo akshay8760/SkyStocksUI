@@ -23,7 +23,7 @@ const UserDetails = () => {
   const navigation = useNavigation();
   const { userDetails } = useContext(DataContext);
   const [spinner, setSpinner] = useState(false);
-  const { setUserDetails, setLogOut } = useContext(DataContext);
+  const { setUserDetails, setLogOut, setLogIn } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
 
   //console.log("user", userDetails.user[0].phoneNo);
@@ -34,6 +34,7 @@ const UserDetails = () => {
 
   handleLogout = () => {
     setLogOut(true);
+    setLogIn(false);
     setShowAlert(false);
     ToastAndroid.show("Logged out successfully!", ToastAndroid.SHORT);
     setTimeout(() => {

@@ -11,14 +11,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PORT } from "@env";
 import DataContext from "../Context/DataContext";
 
 const chartIcon = require("../assets/icons/chartIcon.gif");
 
 export default function Login({ navigation }) {
-  const { setUserDetails } = useContext(DataContext);
+  const { setUserDetails, logOut, logIn, setLogIn } = useContext(DataContext);
   const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -26,7 +26,8 @@ export default function Login({ navigation }) {
 
   const loginUser = async () => {
     try {
-      const url = "http://" + PORT + "/users/signIn";
+      // const url = "http://" + PORT + "/users/signIn";
+      const url = PORT + "/users/signIn";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -42,7 +43,6 @@ export default function Login({ navigation }) {
       const data = await response;
       const userDetails = await data.json();
       setUserDetails(userDetails);
-      // console.log("data", userDetails);
       return await data.status;
     } catch (error) {
       ToastAndroid.show("Something went wrong!", ToastAndroid.SHORT);
@@ -70,6 +70,7 @@ export default function Login({ navigation }) {
         ToastAndroid.show("Welcome Back!", ToastAndroid.SHORT);
         setTimeout(() => {
           navigation.navigate("Home");
+          setLogIn(true);
           setPhoneNo("");
           setPassword("");
           setErrors({});
@@ -91,6 +92,12 @@ export default function Login({ navigation }) {
     }
   };
 
+  useEffect(() => {
+    if (logIn) {
+      navigation.navigate("Home");
+    }
+  }, []);
+
   toSignUp = () => {
     setTimeout(() => {
       navigation.navigate("Register");
@@ -104,51 +111,55 @@ export default function Login({ navigation }) {
         behavior="padding"
         keyboardVerticalOffset={0}
       >
-        <ScrollView style={styles.scrollMe}>
-          <View style={styles.imageSection}>
-            <Image
-              source={chartIcon}
-              resizeMode="contain"
-              style={styles.stockDetailsStyle}
-            />
-          </View>
-          <View style={styles.header}>
-            <Text style={styles.appName}>Sky Stocks</Text>
-            <Text style={styles.loginText}>Account Login</Text>
-          </View>
-          <View style={styles.logincard}>
-            <View style={styles.loginInput}>
-              <TextInput
-                inputMode="numeric"
-                style={styles.addDetails}
-                placeholder="Phone Number"
-                value={phoneNo}
-                onChangeText={(text) => setPhoneNo(text)}
-              />
-              <TextInput
-                style={styles.addDetails}
-                placeholder="Password"
-                value={password}
-                secureTextEntry={true}
-                inputMode="text"
-                onChangeText={(text) => setPassword(text)}
+        {!logIn && (
+          <ScrollView style={styles.scrollMe}>
+            <View style={styles.imageSection}>
+              <Image
+                source={chartIcon}
+                resizeMode="contain"
+                style={styles.stockDetailsStyle}
               />
             </View>
-            <TouchableOpacity
-              style={styles.loginButton}
-              onPress={() => handleLogin()}
-            >
-              {!spinner && <Text style={styles.submitDetailstext}>Login</Text>}
-              {spinner && <ActivityIndicator size="small" color="white" />}
-            </TouchableOpacity>
-            <View style={styles.noAccount}>
-              <Text style={styles.donttext}>Don't have an account?</Text>
-              <TouchableOpacity onPress={() => toSignUp()}>
-                <Text style={styles.signUp}>Sign up</Text>
+            <View style={styles.header}>
+              <Text style={styles.appName}>Sky Stocks</Text>
+              <Text style={styles.loginText}>Account Login</Text>
+            </View>
+            <View style={styles.logincard}>
+              <View style={styles.loginInput}>
+                <TextInput
+                  inputMode="numeric"
+                  style={styles.addDetails}
+                  placeholder="Phone Number"
+                  value={phoneNo}
+                  onChangeText={(text) => setPhoneNo(text)}
+                />
+                <TextInput
+                  style={styles.addDetails}
+                  placeholder="Password"
+                  value={password}
+                  secureTextEntry={true}
+                  inputMode="text"
+                  onChangeText={(text) => setPassword(text)}
+                />
+              </View>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={() => handleLogin()}
+              >
+                {!spinner && (
+                  <Text style={styles.submitDetailstext}>Login</Text>
+                )}
+                {spinner && <ActivityIndicator size="small" color="white" />}
               </TouchableOpacity>
+              <View style={styles.noAccount}>
+                <Text style={styles.donttext}>Don't have an account?</Text>
+                <TouchableOpacity onPress={() => toSignUp()}>
+                  <Text style={styles.signUp}>Sign up</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

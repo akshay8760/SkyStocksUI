@@ -7,7 +7,14 @@ const Stockcard = ({ stockList, stockLength, navigation }) => {
       localeMatcher: "best fit",
       timeZoneName: "short",
     });
-    localDate = localDate.substring(0, 23);
+
+    let index;
+    if (localDate.indexOf("am") > 0) {
+      index = localDate.indexOf("am") + 2;
+    } else {
+      index = localDate.indexOf("pm") + 2;
+    }
+    localDate = localDate.substring(0, index);
 
     return localDate;
   };

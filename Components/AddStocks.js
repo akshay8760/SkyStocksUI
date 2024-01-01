@@ -34,7 +34,7 @@ const AddStocks = () => {
 
   const saveStocksDetails = async () => {
     try {
-      const url = "http://" + PORT + "/stocks";
+      const url = PORT + "/stocks";
       const response = await fetch(url, {
         method: "POST",
         headers: {

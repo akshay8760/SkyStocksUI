@@ -29,7 +29,7 @@ const CardsSection = ({ navigation }) => {
 
   const fetchData = async () => {
     try {
-      const url = "http://" + PORT + "/stocks";
+      const url = PORT + "/stocks";
       const response = await fetch(url, {
         headers: {
           Authorization: "Bearer " + bearerToken,
@@ -66,12 +66,9 @@ const CardsSection = ({ navigation }) => {
       results = allStocks;
     } else if (selectedDate === "Today") {
       var today = new Date();
-      var year = today.getFullYear();
-      var mon = today.getMonth() + 1;
-      var day = today.getDate();
-      var fecha = year + "-" + mon + "-" + day;
+      let date = today.toISOString().substring(0, 10);
       results = allStocks.filter((stocks) => {
-        return stocks?.updatedAt?.includes(fecha);
+        return stocks?.updatedAt?.includes(date);
       });
     } else if (selectedDate) {
       results = allStocks.filter((stocks) => {

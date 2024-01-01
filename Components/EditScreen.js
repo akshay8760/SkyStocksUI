@@ -41,7 +41,7 @@ const EditScreen = ({ route, navigation }) => {
   const editStocksDetails = async (id) => {
     const date = new Date();
     try {
-      const url = "http://" + PORT + "/stocks/" + id;
+      const url = PORT + "/stocks/" + id;
       const response = await fetch(url, {
         method: "PUT",
         headers: {
