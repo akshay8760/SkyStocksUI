@@ -11,24 +11,34 @@ import { useContext } from "react";
 import DataContext from "../Context/DataContext";
 import { useIsFocused } from "@react-navigation/native";
 import { PORT } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CardsSection = ({ navigation }) => {
   const isFocused = useIsFocused();
-  const {
-    searchKeyword,
-    userDetails,
-    selectedDate,
-    showCalendar,
-    refreshList,
-  } = useContext(DataContext);
+  const { searchKeyword, selectedDate, showCalendar, refreshList } =
+    useContext(DataContext);
   const [allStocks, setAllStocks] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [loader, setLoader] = useState(true);
   const [stockLength, setStockLength] = useState();
-  const [bearerToken] = useState(userDetails.token);
+  const [bearerToken, setBearerToken] = useState("");
+
+  getUserDetails = async () => {
+    try {
+      const value = await AsyncStorage.getItem("USER_DETAILS");
+      if (value !== null) {
+        setBearerToken(JSON.parse(value).token);
+      } else {
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(value);
+    }
+  };
 
   const fetchData = async () => {
     try {
+      await getUserDetails();
       const url = PORT + "/stocks";
       const response = await fetch(url, {
         headers: {
@@ -52,12 +62,14 @@ const CardsSection = ({ navigation }) => {
   }, [refreshList]); // [isFocused]
 
   useEffect(() => {
-    const results = allStocks.filter((stocks) => {
-      return stocks.name.toLowerCase().includes(searchKeyword);
-    });
+    if (allStocks.length) {
+      const results = allStocks?.filter((stocks) => {
+        return stocks.name.toLowerCase().includes(searchKeyword);
+      });
 
-    setFilteredStocks(results);
-    setStockLength(results.length);
+      setFilteredStocks(results);
+      setStockLength(results.length);
+    }
   }, [searchKeyword]);
 
   useEffect(() => {
@@ -67,11 +79,11 @@ const CardsSection = ({ navigation }) => {
     } else if (selectedDate === "Today") {
       var today = new Date();
       let date = today.toISOString().substring(0, 10);
-      results = allStocks.filter((stocks) => {
+      results = allStocks?.filter((stocks) => {
         return stocks?.updatedAt?.includes(date);
       });
     } else if (selectedDate) {
-      results = allStocks.filter((stocks) => {
+      results = allStocks?.filter((stocks) => {
         return stocks?.updatedAt?.includes(selectedDate);
       });
     }

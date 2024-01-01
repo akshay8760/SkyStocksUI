@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -12,17 +12,33 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
-import DataContext from "../Context/DataContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const backIcon = require("../assets/icons/left-arrow.png");
 const dotIcon = require("../assets/icons/dots.png");
 const stockDetailsIcon = require("../assets/icons/stockDetailsIcon.gif");
 
 const InfoScreen = ({ route, navigation }) => {
-  const { userDetails } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [bearerToken] = useState(userDetails.token);
+  const [bearerToken, setBearerToken] = useState("");
+
+  getUserDetails = async () => {
+    try {
+      const value = await AsyncStorage.getItem("USER_DETAILS");
+      if (value !== null) {
+        setBearerToken(JSON.parse(value).token);
+      } else {
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(value);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const deleteStocks = async (id) => {
     try {

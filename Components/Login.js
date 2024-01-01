@@ -14,11 +14,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useContext, useEffect, useState } from "react";
 import { PORT } from "@env";
 import DataContext from "../Context/DataContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const chartIcon = require("../assets/icons/chartIcon.gif");
 
 export default function Login({ navigation }) {
-  const { setUserDetails, logOut, logIn, setLogIn } = useContext(DataContext);
+  const { isLogin, setIsLogin } = useContext(DataContext);
   const [phoneNo, setPhoneNo] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -49,6 +50,15 @@ export default function Login({ navigation }) {
     }
   };
 
+  setUserDetails = async (userDetails) => {
+    try {
+      console.log("userDetails", userDetails);
+      await AsyncStorage.setItem("USER_DETAILS", JSON.stringify(userDetails));
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
   const validateForm = () => {
     let errors = {};
     if (!phoneNo) errors.phoneNo = "Phone No Price is required";
@@ -69,8 +79,8 @@ export default function Login({ navigation }) {
       if (status === 201) {
         ToastAndroid.show("Welcome Back!", ToastAndroid.SHORT);
         setTimeout(() => {
+          setLoginStatus();
           navigation.navigate("Home");
-          setLogIn(true);
           setPhoneNo("");
           setPassword("");
           setErrors({});
@@ -93,15 +103,39 @@ export default function Login({ navigation }) {
   };
 
   useEffect(() => {
-    if (logIn) {
-      navigation.navigate("Home");
-    }
+    //setLoginStatus();
+    getLoginStatus();
   }, []);
 
   toSignUp = () => {
     setTimeout(() => {
       navigation.navigate("Register");
     }, 500);
+  };
+
+  setLoginStatus = async () => {
+    try {
+      await AsyncStorage.setItem("IS_LOGIN", JSON.stringify(true));
+      setIsLogin(true);
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  getLoginStatus = async () => {
+    try {
+      const value = await AsyncStorage.getItem("IS_LOGIN");
+      if (value !== null) {
+        // We have data!!
+        if (JSON.parse(value)) {
+          navigation.navigate("Home");
+        }
+      } else {
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(value);
+    }
   };
 
   return (
@@ -111,7 +145,7 @@ export default function Login({ navigation }) {
         behavior="padding"
         keyboardVerticalOffset={0}
       >
-        {!logIn && (
+        {!isLogin && (
           <ScrollView style={styles.scrollMe}>
             <View style={styles.imageSection}>
               <Image

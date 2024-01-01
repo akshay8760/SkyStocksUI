@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,17 +13,15 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useIsFocused } from "@react-navigation/native";
 import TitleSection from "./TitleSection";
-import base64 from "react-native-base64";
 import { PORT } from "@env";
 import AwesomeAlert from "react-native-awesome-alerts";
-import DataContext from "../Context/DataContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const backIcon = require("../assets/icons/left-arrow.png");
 const dotIcon = require("../assets/icons/dots.png");
 
 const EditScreen = ({ route, navigation }) => {
   const stockDetails = route.params.stockDetails.stockDetails;
-  const { userDetails } = useContext(DataContext);
   const [name, setName] = useState(stockDetails.name);
   const [entryPrice, setEntryPrice] = useState(
     stockDetails.entryPrice.toLocaleString()
@@ -36,7 +34,24 @@ const EditScreen = ({ route, navigation }) => {
   const [errors, setErrors] = useState({});
   const [showAlert, setShowAlert] = useState(false);
   const isFocused = useIsFocused();
-  const [bearerToken] = useState(userDetails.token);
+  const [bearerToken, setBearerToken] = useState("");
+
+  getUserDetails = async () => {
+    try {
+      const value = await AsyncStorage.getItem("USER_DETAILS");
+      if (value !== null) {
+        setBearerToken(JSON.parse(value).token);
+      } else {
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(value);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
 
   const editStocksDetails = async (id) => {
     const date = new Date();

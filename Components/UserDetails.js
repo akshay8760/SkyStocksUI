@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -13,6 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DataContext from "../Context/DataContext";
 import { useNavigation } from "@react-navigation/native";
 import AwesomeAlert from "react-native-awesome-alerts";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const backIcon = require("../assets/icons/left-arrow.png");
 const faceIcon = require("../assets/icons/face.png");
@@ -21,12 +22,27 @@ const phoneIcon = require("../assets/icons/phone-call.png");
 
 const UserDetails = () => {
   const navigation = useNavigation();
-  const { userDetails } = useContext(DataContext);
   const [spinner, setSpinner] = useState(false);
-  const { setUserDetails, setLogOut, setLogIn } = useContext(DataContext);
+  const { setLogOut, setIsLogin } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
+  const [userDetails, setUserDetails] = useState({});
 
-  //console.log("user", userDetails.user[0].phoneNo);
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  getUserDetails = async () => {
+    try {
+      const value = await AsyncStorage.getItem("USER_DETAILS");
+      if (value !== null) {
+        setUserDetails(JSON.parse(value).user[0]);
+      } else {
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(value);
+    }
+  };
 
   alertshow = () => {
     setShowAlert(true);
@@ -34,7 +50,8 @@ const UserDetails = () => {
 
   handleLogout = () => {
     setLogOut(true);
-    setLogIn(false);
+    setIsLogin(false);
+    setLoginStatus();
     setShowAlert(false);
     ToastAndroid.show("Logged out successfully!", ToastAndroid.SHORT);
     setTimeout(() => {
@@ -46,6 +63,14 @@ const UserDetails = () => {
 
   const alertHide = () => {
     setShowAlert(false);
+  };
+
+  setLoginStatus = async () => {
+    try {
+      await AsyncStorage.setItem("IS_LOGIN", JSON.stringify(false));
+    } catch (error) {
+      // Error saving data
+    }
   };
 
   return (
@@ -67,7 +92,7 @@ const UserDetails = () => {
               resizeMode="contain"
               style={styles.stockDetailsStyle}
             />
-            <Text style={styles.userName}>{userDetails.user[0].userName}</Text>
+            <Text style={styles.userName}>{userDetails.userName}</Text>
           </View>
           <View style={styles.card}>
             <View style={{ flexDirection: "column" }}>
@@ -77,9 +102,7 @@ const UserDetails = () => {
                   resizeMode="contain"
                   style={styles.emailIconStyle}
                 />
-                <Text style={styles.emailTextStyle}>
-                  {userDetails.user[0].email}{" "}
-                </Text>
+                <Text style={styles.emailTextStyle}>{userDetails.email}</Text>
               </View>
               <View style={styles.details}>
                 <Image
@@ -88,7 +111,7 @@ const UserDetails = () => {
                   style={styles.emailIconStyle}
                 />
                 <Text style={styles.emailTextStyle}>
-                  +91 {userDetails.user[0].phoneNo}
+                  +91 {userDetails.phoneNo}
                 </Text>
               </View>
             </View>
